@@ -7,7 +7,6 @@ import (
 	"strings"
 )
 
-// ReadInput parses the input text file.
 func ReadInput(fname string) []int {
 	input, _ := os.ReadFile("input.txt")
 
@@ -21,27 +20,29 @@ func ReadInput(fname string) []int {
 	return depths
 }
 
-// Part1 solves the first part of the Day 1 problem.
-func Part1(depths []int) int {
-	count := 0
+func Accumulate(arr []int) int {
+	sum := 0
 
-	for i, v := range depths[1:] {
-		if v > depths[i] {
-			count++
-		}
+	for _, v := range arr {
+		sum += v
 	}
 
-	return count
+	return sum
 }
 
-// Part2 solves the second part of the Day 1 problem.
-func Part2(depths []int) int {
+func CountIncrements(arr []int, window int) int {
 	count := 0
+	prev := Accumulate(arr[0:window])
 
-	for i, v := range depths[3:] {
-		if v > depths[i] {
+	slice := arr[window:]
+
+	for i := range slice {
+		curr := Accumulate(slice[i : i+window])
+		if curr > prev {
 			count++
 		}
+
+		prev = curr
 	}
 
 	return count
@@ -49,8 +50,8 @@ func Part2(depths []int) int {
 
 func main() {
 	var depths = ReadInput("input.txt")
-	var solution1 = Part1(depths)
-	var solution2 = Part2(depths)
+	var solution1 = CountIncrements(depths, 1)
+	var solution2 = CountIncrements(depths, 3)
 
 	fmt.Printf("Part1: %d\nPart2: %d", solution1, solution2)
 }
