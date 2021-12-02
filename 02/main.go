@@ -7,29 +7,7 @@ import (
 	"strings"
 )
 
-func Part1(commands []string) int {
-	var x, y int = 0, 0
-
-	for _, c := range commands {
-		c = strings.TrimSpace(c)
-		parts := strings.Split(c, " ")
-		direction := parts[0]
-		change, _ := strconv.Atoi(parts[1])
-
-		switch direction {
-		case "forward":
-			x += change
-		case "down":
-			y += change
-		case "up":
-			y -= change
-		}
-	}
-
-	return x * y
-}
-
-func Part2(commands []string) int {
+func CalcMovement(commands []string, calcAim bool) int {
 	var x, y, z int = 0, 0, 0
 
 	for _, c := range commands {
@@ -41,11 +19,22 @@ func Part2(commands []string) int {
 		switch direction {
 		case "forward":
 			x += change
-			y += (change * z)
+			if calcAim {
+				y += (change * z)
+			}
 		case "down":
-			z += change
+			if calcAim {
+				z += change
+			} else {
+				y += change
+			}
+
 		case "up":
-			z -= change
+			if calcAim {
+				z -= change
+			} else {
+				y -= change
+			}
 		}
 	}
 
@@ -55,7 +44,7 @@ func Part2(commands []string) int {
 func main() {
 	input, _ := os.ReadFile("input.txt")
 	commands := strings.Split(string(input), "\n")
-	solution1 := Part1(commands)
-	solution2 := Part2(commands)
+	solution1 := CalcMovement(commands, false)
+	solution2 := CalcMovement(commands, true)
 	fmt.Printf("Part1: %d\nPart2: %d", solution1, solution2)
 }
