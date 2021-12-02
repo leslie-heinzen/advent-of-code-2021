@@ -8,7 +8,7 @@ import (
 )
 
 func ReadInput(fname string) []int {
-	input, _ := os.ReadFile("input.txt")
+	input, _ := os.ReadFile(fname)
 
 	depths := []int{}
 
