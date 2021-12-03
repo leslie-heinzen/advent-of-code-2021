@@ -37,9 +37,8 @@ func Part1(input []string) int64 {
 			epsilon = append(epsilon, "1")
 		}
 	}
-	fmt.Print(gamma)
+
 	gammaStr := strings.Join(gamma, "")
-	fmt.Print(gammaStr)
 	epsilonStr := strings.Join(epsilon, "")
 	g, _ := strconv.ParseInt(gammaStr, 2, 64)
 	e, _ := strconv.ParseInt(epsilonStr, 2, 64)
@@ -75,8 +74,6 @@ func GetOxygenRating(input []string) int64 {
 				oxArr = append(oxArr[:v], oxArr[v+1:]...)
 			}
 		}
-
-		fmt.Printf("ox len: %d\n", len(oxArr))
 
 		if len(oxArr) == 1 {
 			oxStr = strings.TrimSpace(oxArr[0])
@@ -117,7 +114,6 @@ func GetCo2Rating(input []string) int64 {
 			}
 		}
 
-		fmt.Printf("len: %d\n", len(scrubberArr))
 		if len(scrubberArr) == 1 {
 			scrubberStr = strings.TrimSpace(scrubberArr[0])
 		}
@@ -139,6 +135,6 @@ func main() {
 	lines := strings.Split(string(input), "\n")
 	solution1 := Part1(lines)
 	solution2 := Part2(lines)
-	fmt.Printf("Part1: %d", solution1)
-	fmt.Printf("Part2: %d", solution2)
+	fmt.Printf("Part1: %d\n", solution1)
+	fmt.Printf("Part2: %d\n", solution2)
 }
