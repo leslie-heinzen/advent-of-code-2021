@@ -9,8 +9,7 @@ import (
 
 func main() {
 	lines := readInput("example.txt")
-	_, illegalChars, corrupted := iterateLines(lines, map[int]bool{})
-	lineCompletions, _, _ := iterateLines(lines, corrupted)
+	lineCompletions, illegalChars := iterateLines(lines)
 	part1Score := calcCorruptedScore(illegalChars)
 	part2Score := calcAutocompleteScore(lineCompletions)
 	fmt.Printf("Solution 1: %d\n", part1Score)
@@ -31,7 +30,7 @@ func readInput(fileName string) []string {
 	return lines
 }
 
-func iterateLines(lines []string, toSkip map[int]bool) ([][]rune, []rune, map[int]bool) {
+func iterateLines(lines []string) ([][]rune, []rune) {
 	charMap := map[rune]rune{
 		'(': ')',
 		'[': ']',
@@ -76,7 +75,7 @@ func iterateLines(lines []string, toSkip map[int]bool) ([][]rune, []rune, map[in
 		lineCompletions = append(lineCompletions, lineCompletion)
 	}
 
-	return lineCompletions, illegalChars, corrupted
+	return lineCompletions, illegalChars
 }
 
 func getCompletion(stack []rune) []rune {
